@@ -12,8 +12,9 @@ const createWindow = () => {
      win = new BrowserWindow({
         width: 800,
         height: 600,
+        icon: './src/public/img/estoque.png',
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'preload.js'),
         }
     })
     Menu.setApplicationMenu(Menu.buildFromTemplate(template))
@@ -32,7 +33,7 @@ const aboutWindow = () => {
             resizable: false, //evitar o redimensionamento
             //titleBarStyle: 'hidden', //esconder barra de título e menu
             autoHideMenuBar: true, //esconder o menu
-            icon: './src/public/img/pc.png'
+            icon: './src/public/img/estoquesobre.png'
         })
     }
     // nativeTheme.themeSource = 'dark'
