@@ -1,12 +1,11 @@
 const { ipcMain } = require('electron')
-const { app, BrowserWindow, Menu, shell } = require('electron/main')
+const { app, BrowserWindow, Menu } = require('electron/main')
 const path = require('node:path')
 
-// Importar o módulo de conexão
+// importar o módulo de conexão
 const { conectar, desconectar } = require('./database.js')
 
-
-// Janela Principal (definir o objeto win como variavel publica)
+// Janela principal (definir o objeto win como variável pública)
 let win
 const createWindow = () => {
     win = new BrowserWindow({
@@ -14,120 +13,102 @@ const createWindow = () => {
         height: 600,
         icon: './src/public/img/estoquesobre.png',
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
+            preload: path.join(__dirname, 'preload.js')
         }
     })
-    Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+
+    Menu.setApplicationMenu(Menu.buildFromTemplate(menu))
+
     win.loadFile('./src/views/index.html')
 }
 
-//janela sobre
-let about //Resolver bug de abertura de várias janelas
+let about
 
 const aboutWindow = () => {
-    // Se a janela about n estiver aberta (bug 1) abrir
     if (!about) {
         about = new BrowserWindow({
-            width: 560, //largura
-            height: 400, //altura
-            resizable: false, //evitar o redimensionamento
-            //titleBarStyle: 'hidden', //esconder barra de título e menu
-            autoHideMenuBar: true, //esconder o menu
-            icon: './src/public/img/ajuda.png'
+            width: 600, 
+            height: 470, 
+            icon: './src/public/img/ajuda.png',
+            resizable: false,
+            autoHideMenuBar: true
         })
     }
-    // nativeTheme.themeSource = 'dark'
     about.loadFile('./src/views/sobre.html')
-
-    // bug 2 (reabrir a janela ao se estiver fechada)
     about.on('closed', () => {
         about = null
     })
 }
-// janela fornecedor
-let supp //Resolver bug de abertura de várias janelas
 
-const suppWindow = () => {
-    // Se a janela about n estiver aberta (bug 1) abrir
-    if (!supp) {
-        supp = new BrowserWindow({
-            width: 560, //largura
-            height: 400, //altura
-            resizable: false, //evitar o redimensionamento
-            //titleBarStyle: 'hidden', //esconder barra de título e menu
-            autoHideMenuBar: true, //esconder o menu
-            icon: './src/public/img/ajuda.png'
-        })
-    }
-    // nativeTheme.themeSource = 'dark'
-    supp.loadFile('./src/views/fornecedores.html')
-
-    // bug 2 (reabrir a janela ao se estiver fechada)
-    supp.on('closed', () => {
-        supp = null
-    })
-}
-// janela clientes 
-let client //Resolver bug de abertura de várias janelas
+let client
 
 const clientWindow = () => {
-    // Se a janela about n estiver aberta (bug 1) abrir
     if (!client) {
         client = new BrowserWindow({
-            width: 560, //largura
-            height: 400, //altura
-            resizable: false, //evitar o redimensionamento
-            //titleBarStyle: 'hidden', //esconder barra de título e menu
-            autoHideMenuBar: true, //esconder o menu
-            icon: './src/public/img/ajuda.png'
+            width: 600,
+            height: 470,
+            icon: './src/public/img/cliente.png',
+            resizable: false,
+            autoHideMenuBar: true
         })
     }
-    // nativeTheme.themeSource = 'dark'
     client.loadFile('./src/views/clientes.html')
-
-    // bug 2 (reabrir a janela ao se estiver fechada)
     client.on('closed', () => {
         client = null
     })
 }
 
-// janela produtos
-let produt //Resolver bug de abertura de várias janelas
+let supp
 
-const produtWindow = () => {
-    // Se a janela about n estiver aberta (bug 1) abrir
-    if (!produt) {
-        produt = new BrowserWindow({
-            width: 560, //largura
-            height: 400, //altura
-            resizable: false, //evitar o redimensionamento
-            //titleBarStyle: 'hidden', //esconder barra de título e menu
-            autoHideMenuBar: true, //esconder o menu
-            icon: './src/public/img/ajuda.png'
+const suppWindow = () => {
+    if (!supp) {
+        supp = new BrowserWindow({
+            width: 600,
+            height: 470,
+            icon: './src/public/img/fornecedores.png',
+            resizable: false,
+            autoHideMenuBar: true
         })
     }
-    // nativeTheme.themeSource = 'dark'
-    produt.loadFile('./src/views/produtos.html')
+    supp.loadFile('./src/views/fornecedores.html')
+    supp.on('closed', () => {
+        supp = null
+    })
+}
 
-    // bug 2 (reabrir a janela ao se estiver fechada)
+let produt
+
+const produtWindow = () => {
+    if (!produt) {
+        produt = new BrowserWindow({
+            width: 600,
+            height: 470,
+            icon: './src/public/img/produto.png',
+            resizable: false,
+            autoHideMenuBar: true
+        })
+    }
+    produt.loadFile('./src/views/produtos.html')
     produt.on('closed', () => {
         produt = null
     })
 }
-// Iniciar a aplicação
-app.whenReady().then(() => {
-    createWindow()
 
-    //   status de conexão com o banco de dados
+// iniciar a aplicação
+app.whenReady().then(() => {
+
+    // status de conexão com o banco de dados
     ipcMain.on('send-message', (event, message) => {
-        console.log(`<<< ${message} >>>`)
+        console.log(`<<< ${message}`)
         statusConexao()
     })
 
-    // Desconectar do banco ao encerrar a janela
+    // desconectar do banco ao encerrar a janela
     app.on('before-quit', async () => {
         await desconectar()
     })
+
+    createWindow()
 
     app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
@@ -136,48 +117,29 @@ app.whenReady().then(() => {
     })
 })
 
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-        app.quit()
-    }
-})
-
-// Template do menu personalizado
-
-const template = [
+const menu = [
     {
         label: 'Arquivo',
         submenu: [
             {
-                label: 'Sair',
-                click: () => app.quit(),
-                accelerator: 'Alt+F4'
-            },
-            {
                 label: 'Clientes',
-                click: () => clientWindow()
+                click: () => clientesWindow()
             },
             {
                 label: 'Fornecedores',
-                click: () => suppWindow()
+                click: () => fornecedoresWindow()
             },
             {
                 label: 'Produtos',
-                click: () => produtWindow()
-            }
-        ]
-    },
-
-    {
-        label: 'Ajuda',
-        submenu: [
+                click: () => produtosWindow()
+            },
             {
-                label: 'Sobre',
-                click: () => aboutWindow(),
+                label: 'Sair',
+                click: () => app.quit(),
+                accelerator: 'Alt+F4'
             }
         ]
     },
-
     {
         label: 'Exibir',
         submenu: [
@@ -186,8 +148,11 @@ const template = [
                 role: 'reload'
             },
             {
-                label: 'Ferramentas',
+                label: 'Ferramentas do desenvolvedor',
                 role: 'toggleDevTools'
+            },
+            {
+                type: 'separator'
             },
             {
                 label: 'Aplicar zoom',
@@ -201,10 +166,19 @@ const template = [
                 label: 'Restaurar o zoom padrão',
                 role: 'resetZoom'
             }
-
+        ]
+    },
+    {
+        label: 'Ajuda',
+        submenu: [
+            {
+                label: 'Sobre',
+                click: () => aboutWindow()
+            }
         ]
     }
 ]
+
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
@@ -212,14 +186,22 @@ app.on('window-all-closed', () => {
     }
 })
 
-
-//-------------------------------------------------------------
-// Função para verificar status de conexão com o banco de dados
+//-----------------------------------------------
+// Função que verifica o status da conexão
 const statusConexao = async () => {
     try {
         await conectar()
-        win.webContents.send('db-status', "Banco de dados conectado.")
+        win.webContents.send('db-status', "Banco de dados conectado")
     } catch (error) {
-        win.webContents.send('db-status', `Erro de conexão: ${error}`)
+        win.webContents.send('db-status', `Erro de conexão: ${error.message}`)
     }
 }
+ipcMain.on('open-clientes', () => {
+    clientWindow()
+})
+ipcMain.on('open-fornecedores', () => {
+    suppWindow()
+})
+ipcMain.on('open-produtos', () => {
+    produtWindow()
+})

@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conest -  controle de estoque</title>
+    <!-- evitar ataques de Cross Site Scripting (injeção de dados)-->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
+    <title>Conest - controle de estoque</title>
 
-    
+
     <!-- bootstrap -->
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
 
     <!-- css personalizado (por ultimo)-->
     <link rel="stylesheet " href="../public/css/style.css">
 </head>
+
 <body>
     <div class="container">
         <h1>CONEST</h1>
-        <button class="btn  btn-info" onclick="Clientes()">Clientes</button>
-        <button class="btn  btn-info" onclick="Fornecedores()">Fornecedores</button>
-        <button class="btn  btn-info" onclick="Produtos()">Produtos</button>
+
     </div>
-      
     <!-- Rodapé-->
     <footer>
         <p id="dataAtual"></p>
     </footer>
+    
+    <button type="button" class="btn btn white"><img src="../public/img/cliente.png" alt="clientes" title="Clientes"
+            onclick="clientes()"></button>
+    <button type="button" class="btn btn-white"><img src="../public/img/fornecedores.png" alt="fornecedores"
+            title="Fornecedores" onclick="fornecedores()"></button>
+    <button type="button" class="btn btn-white"><img src="../public/img/produto.png" alt="produtos" title="Produtos"
+            onclick="produtos()"></button>
+
     <!-- bootstrap-->
     <script src="../public/js/bootstrap.min.js"></script>
 
-    <script src="renderer.js" ></script>
+    <script src="renderer.js"></script>
 </body>
+
 </html>
