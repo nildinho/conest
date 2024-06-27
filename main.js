@@ -25,13 +25,15 @@ const createWindow = () => {
 let about
 
 const aboutWindow = () => {
+    const father = BrowserWindow.getFocusedWindow()
     if (!about) {
         about = new BrowserWindow({
             width: 600, 
             height: 470, 
             icon: './src/public/img/ajuda.png',
-            resizable: false,
-            autoHideMenuBar: true
+            autoHideMenuBar: true,
+            modal: true,
+            parent: father
         })
     }
     about.loadFile('./src/views/sobre.html')
@@ -43,13 +45,15 @@ const aboutWindow = () => {
 let client
 
 const clientWindow = () => {
+    const father = BrowserWindow.getFocusedWindow()
     if (!client) {
         client = new BrowserWindow({
-            width: 600,
-            height: 470,
+            width: 800,
+            height: 650,
             icon: './src/public/img/cliente.png',
-            resizable: false,
-            autoHideMenuBar: true
+            autoHideMenuBar: true,
+            modal: true,
+            parent: father
         })
     }
     client.loadFile('./src/views/clientes.html')
@@ -61,13 +65,15 @@ const clientWindow = () => {
 let supp
 
 const suppWindow = () => {
+    const father = BrowserWindow.getFocusedWindow()
     if (!supp) {
         supp = new BrowserWindow({
-            width: 600,
-            height: 470,
+            width: 1280,
+            height: 720,
             icon: './src/public/img/fornecedores.png',
-            resizable: false,
-            autoHideMenuBar: true
+            autoHideMenuBar: true,
+            modal: true,
+            parent: father
         })
     }
     supp.loadFile('./src/views/fornecedores.html')
@@ -79,13 +85,15 @@ const suppWindow = () => {
 let produt
 
 const produtWindow = () => {
+    const father = BrowserWindow.getFocusedWindow()
     if (!produt) {
         produt = new BrowserWindow({
             width: 600,
             height: 470,
             icon: './src/public/img/produto.png',
-            resizable: false,
-            autoHideMenuBar: true
+            autoHideMenuBar: true,
+            modal: true,
+            parent: father
         })
     }
     produt.loadFile('./src/views/produtos.html')
@@ -123,15 +131,15 @@ const menu = [
         submenu: [
             {
                 label: 'Clientes',
-                click: () => clientesWindow()
+                click: () => clientWindow()
             },
             {
                 label: 'Fornecedores',
-                click: () => fornecedoresWindow()
+                click: () => suppWindow()
             },
             {
                 label: 'Produtos',
-                click: () => produtosWindow()
+                click: () => produtWindow()
             },
             {
                 label: 'Sair',

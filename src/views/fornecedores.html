@@ -1,13 +1,111 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- evitar ataques de Cross Site Scripting (injeção de dados)-->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
     <title>Fornecedores</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+
+    <!-- css personalizado -->
+    <link rel="stylesheet" href="../public/css/style.css">
 </head>
-<body>
+
+</head>
+
+<div class="container">
     <h1>Fornecedores</h1>
+    <form class="row g-3 " id="frmFornecedor">
+
+        <div class="col-md-4">
+            <input type="text" class="form-control" id="inputSearch" maxlength="30" spellcheck="false">
+        </div>
+
+        <div class="col-md-6">
+            <button type="button" class="btn btn-dark">Buscar</button>
+        </div>
+
+        <hr class="border border-dark border-1 opacity-75">
+
+        <div class="col-md-4">
+            <input type="text" class="form-control" id="inputId" placeholder="ID">
+        </div>
+
+
+        <div class="col-md-4">
+            <label for="inputName" class="form-label">Razão Social</label>
+            <input type="text" class="form-control" id="inputName" required maxlength="30" spellcheck="false">
+        </div>
+
+        <div class="col-md-4">
+            <label for="inputPhone" class="form-label">Telefone</label>
+            <input type="number" class="form-control" id="inputPhone" spellcheck="false" required>
+        </div>
+        <div class="col-md-4">
+            <label for="inputEmail" class="form-label">E-Mail do Fornecedor </label>
+            <input type="email" class="form-control" id="inputEmail" required maxlength="30" spellcheck="false">
+        </div>
+        <div class="col-md-4">
+            <label for="inputCnpj" class="form-label">CNPJ</label>
+            <input type="number" class="form-control" id="inputCnpj" spellcheck="false" required>
+        </div>
+
+        <div class="col-md-3">
+            <label for="exampleFormControlInput1" class="form-label">CEP</label>
+            <input type="email" class="form-control" id="inputcep" >
+            <br>
+            <button type="button" class="btn btn-dark" onclick="buscarCep()">Buscar</button>
+        </div>
+
+        <div class="col-md-3">
+            <label for="inputlogradouro" class="form-label">Logradouro</label>
+            <input type="text" class="form-control" id="inputlogradouro">
+        </div>
+
+        <div class="col-md-1">
+            <label for="inputnumero" class="form-label">Número</label>
+            <input type="text" class="form-control" id="inputnumero">
+        </div>
+
+        <div class="col-md-3">
+            <label for="inputbairro" class="form-label">Bairro</label>
+            <input type="text" class="form-control" id="inputbairro">
+        </div>
+
+        <div class="col-md-3">
+            <label for="inputcomplemento" class="form-label">Complemento</label>
+            <input type="text" class="form-control" id="inputcomplemento">
+        </div>
+
+        <div class="col-md-3">
+            <label for="inputcidade" class="form-label">Localidade</label>
+            <input type="text" class="form-control" id="inputcidade">
+        </div>
+
+        <div class="col-md-1">
+            <label for="inputuf" class="form-label">UF</label>
+            <input type="text" class="form-control" id="inputuf">
+        </div>
+
+
+
+        <!-- botões-->
+        <div class="col-12">
+            <br>
+            <button type="submit" class="btn btn-dark" id="btnCreate">Adicionar</button>
+            <button type="submit" class="btn btn-dark" id="btnUpdate">Editar</button>
+            <button type="submit" class="btn btn-dark" id="btnDelete">Excluir</button>
+            <button type="reset" class="btn" id="btnReset"></button>
+        </div>
+
+
+    </form>
+</div>
+<script src="../public/js/bootstrap.min.js"></script>
+<script src="script.js"></script>
 </body>
+
 </html>
