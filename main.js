@@ -9,11 +9,12 @@ const { conectar, desconectar } = require('./database.js')
 let win
 const createWindow = () => {
     win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1280,
+        height: 720,
         icon: './src/public/img/estoquesobre.png',
         webPreferences: {
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'preload.js'),
+            resizable: false
         }
     })
 
@@ -28,12 +29,13 @@ const aboutWindow = () => {
     const father = BrowserWindow.getFocusedWindow()
     if (!about) {
         about = new BrowserWindow({
-            width: 600, 
-            height: 470, 
+            width: 1280, 
+            height: 720, 
             icon: './src/public/img/ajuda.png',
             autoHideMenuBar: true,
             modal: true,
-            parent: father
+            parent: father, 
+            resizable: false
         })
     }
     about.loadFile('./src/views/sobre.html')
@@ -48,12 +50,13 @@ const clientWindow = () => {
     const father = BrowserWindow.getFocusedWindow()
     if (!client) {
         client = new BrowserWindow({
-            width: 800,
-            height: 650,
+            width: 1280,
+            height: 720,
             icon: './src/public/img/cliente.png',
             autoHideMenuBar: true,
             modal: true,
-            parent: father
+            parent: father,
+            resizable: false
         })
     }
     client.loadFile('./src/views/clientes.html')
@@ -73,7 +76,8 @@ const suppWindow = () => {
             icon: './src/public/img/fornecedores.png',
             autoHideMenuBar: true,
             modal: true,
-            parent: father
+            parent: father,
+            resizable: false
         })
     }
     supp.loadFile('./src/views/fornecedores.html')
@@ -88,17 +92,39 @@ const produtWindow = () => {
     const father = BrowserWindow.getFocusedWindow()
     if (!produt) {
         produt = new BrowserWindow({
-            width: 600,
-            height: 470,
+            width: 1280,
+            height: 720,
             icon: './src/public/img/produto.png',
             autoHideMenuBar: true,
             modal: true,
-            parent: father
+            parent: father,
+            resizable: false
         })
     }
     produt.loadFile('./src/views/produtos.html')
     produt.on('closed', () => {
         produt = null
+    })
+}
+
+let reports
+
+const reportsWindow = () => {
+    const father = BrowserWindow.getFocusedWindow()
+    if (!reports) {
+        reports = new BrowserWindow({
+            width: 1280,
+            height: 720,
+            icon: './src/public/img/relatorios.png',
+            autoHideMenuBar: true,
+            modal: true,
+            parent: father,
+            resizable: false
+        })
+    }
+    reports.loadFile('./src/views/relatorios.html')
+    reports.on('closed', () => {
+        reports = null
     })
 }
 
@@ -176,6 +202,16 @@ const menu = [
             }
         ]
     },
+
+    {
+        label: 'Relatorios',
+        submenu: [
+            {
+                label: 'Relatorios',
+                click: () => relatoriosWindow()
+            }
+        ]
+    },
     {
         label: 'Ajuda',
         submenu: [
@@ -212,4 +248,7 @@ ipcMain.on('open-fornecedores', () => {
 })
 ipcMain.on('open-produtos', () => {
     produtWindow()
+})
+ipcMain.on('open-relatorios', () => {
+    reportsWindow()
 })

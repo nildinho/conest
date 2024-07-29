@@ -4,7 +4,8 @@ contextBridge.exposeInMainWorld('api', {
     hello: () => ipcRenderer.send('send-message', "Oi!"),
     openclient: ()=> ipcRenderer.send('open-clientes'),
     opensupp: ()=> ipcRenderer.send('open-fornecedores'),
-    openprodut: ()=> ipcRenderer.send('open-produtos')
+    openprodut: ()=> ipcRenderer.send('open-produtos'),
+    openreports: ()=> ipcRenderer.send('open-relatorios')
 })
 
 // status de conexão (verificar se o banco de dados está conectado)

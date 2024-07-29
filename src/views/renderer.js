@@ -13,6 +13,10 @@ function produtos() {
     api.openprodut();
 }
 
+function relatorios(){
+    api.openreports()
+}
+
 // Exemplo adicional de como chamar uma função da API
 function helloFromApi() {
     api.hello();
