@@ -7,7 +7,7 @@
 const mongoose = require('mongoose')
 
 // definir um banco de dados 
-let url = "mongodb://admin:123%40senac@10.26.45.215:27017/"
+let url = "mongodb+srv://admin:senac123@clusterconest.bslkffo.mongodb.net/"
 
 // conectar
 const conectar = async () => {
