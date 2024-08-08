@@ -22,10 +22,13 @@ function helloFromApi() {
     api.hello();
 }
 
-const inputPhone = document.getElementById('inputPhone');
 
-    // Adiciona um listener para o evento 'input' que é disparado quando o valor do input muda
-    inputPhone.addEventListener('input', function() {
-        // Remove todos os caracteres não numéricos utilizando uma expressão regular
-        this.value = this.value.replace(/\D/g, '');
-    });
+    // alteração do icone do status do banco de dados
+api.dbMessage((event, message) => {
+    console.log(message)
+    if(message === "conectado"){
+        document.getElementById('status').src = "../public/img/dbon.png"
+    } else {
+        document.getElementById('status').src = "../public/img/dboff.png"
+    }
+})

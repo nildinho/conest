@@ -6,21 +6,16 @@ inputCnpj.addEventListener('input', () => {
     }
 })
 
-const inputPhone = document.getElementById('inputPhone')
-inputPhone.addEventListener('input', () => {
-    if (inputPhone.value.length > 15) {
-        inputPhone.value = inputPhone.value.slice(0, 15)
-    }
-})
+
 
 // Seleciona os elementos do formulário
 const cepInput = document.getElementById('inputCep');
-const logradouroInput = document.getElementById('logradouro');
-const numeroInput = document.getElementById('numero');
-const complementoInput = document.getElementById('complemento');
-const bairroInput = document.getElementById('bairro');
-const localidadeInput = document.getElementById('localidade');
-const ufInput = document.getElementById('uf');
+const logradouroInput = document.getElementById('inputLogradouro');
+const numeroInput = document.getElementById('inputNumero');
+const complementoInput = document.getElementById('inputComplemento');
+const bairroInput = document.getElementById('inputBairro');
+const localidadeInput = document.getElementById('inputCidade');
+const ufInput = document.getElementById('inputUf');
 const BotaoBuscar = document.getElementById('btnSearchCep');
  
 // Adiciona um evento de click ao botão "Buscar"

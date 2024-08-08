@@ -26,7 +26,7 @@
 
             <!-- Botão de Pesquisa de cliente CRUD Read-->
             <div class="col-md-6">
-                <button type="button" class="btn btn-dark">Buscar</button>
+                <button type="button" class="btn btn-dark"onclick="buscarCliente()" id="btnRead">Buscar</button>
             </div>
 
             <hr class="border border-dark border-1 opacity-75">
@@ -51,7 +51,7 @@
             <!-- email cliente-->
             <div class="col-12">
                 <label for="inputAddress" class="form-label">E-Mail </label>
-                <input type="email" class="form-control" id="inputAddress" required maxlength="15" spellcheck="false">
+                <input type="email" class="form-control" id="inputAddress" required maxlength="30" spellcheck="false">
             </div>
 
             <!-- botões-->
@@ -60,13 +60,15 @@
                 <button type="submit" class="btn btn-dark" id="btnCreate">Adicionar</button>
                 <button type="submit" class="btn btn-dark" id="btnUpdate">Editar</button>
                 <button type="submit" class="btn btn-dark" id="btnDelete">Excluir</button>
-                <button type="reset" class="btn" id="btnReset"></button>
+                <button type="reset" class="btn" id="btnReset" onclick="resetform()"></button>
             </div>
         </form>
     </div>
 
     <!-- bootstrap -->
     <script src="../public/js/bootstrap.min.js"></script>
+
+    <script src="cliente.js"></script>
 </body>
 
 </html>

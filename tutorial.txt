@@ -28,4 +28,20 @@ executar a função statusConexão()
 
 passo 8:
 Importante! dentro de app.whenReady()
-criar um método
+criar um método para desconectar o banco de dados quando a janela principal for fechada
+
+passo 9:
+Usar preload.js e IPC (ipcRenderer e ipcMain) para criar uma regra que permita modificar o icone do banco de dados 
+
+passo 10: 
+Criar uma Pasta Models
+
+passo 11: 
+- Criar o modelo para clientes
+Clientes.js (1a letra maiúscula)
+
+passo 12:
+- importar o schema no main.js
+
+CRUD (Create(insert), Read(select), Update(update), Delete(delete)):
+Seguir o slides fornecidos
