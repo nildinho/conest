@@ -6,61 +6,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- evitar ataques de Cross Site Scripting (injeção de dados)-->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
-    <title>Clientes</title>
     <!-- bootstrap -->
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
 
-    <!-- css personalizado -->
+    <!-- css personalizado (por último)-->
     <link rel="stylesheet" href="../public/css/style.css">
+
+    <title>CONEST - Clientes</title>
 </head>
 
 <body>
-    <br>
     <div class="container">
-        <h1>Clientes</h1>
-        <form class="row g-3 " id="frmCliente">
-            <!-- caixa de input usada na pesquisa-->
+        <h1 class="mt-3">Clientes</h1>
+        <form class="mt-2 row g-3" id="frmClient">
+            <!-- Buscar cliente -->
             <div class="col-md-6">
-                <input type="text" class="form-control" id="inputSearch" maxlength="30" spellcheck="false">
+                <input type="text" class="form-control" id="inputSearch" maxlength="30" spellcheck="false">               
             </div>
-
-            <!-- Botão de Pesquisa de cliente CRUD Read-->
-            <div class="col-md-6">
-                <button type="button" class="btn btn-dark"onclick="buscarCliente()" id="btnRead">Buscar</button>
-            </div>
-
-            <hr class="border border-dark border-1 opacity-75">
-
-            <!-- id dom mongoDB oculto-->
-            <div class="col-md-6">
-                <input type="text" class="form-control" id="inputId" placeholder="ID">
-            </div>
-
-
-            <!-- nome do cliente-->
-            <div class="col-md-8">
-                <label for="inputName" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="inputName" required maxlength="30" spellcheck="false">
-            </div>
-
-            <!-- telefone do cliente-->
             <div class="col-md-4">
-                <label for="inputPhone" class="form-label">Telefone </label>
-                <input type="tel" class="form-control" id="inputPhone" required maxlength="15" spellcheck="false">
+                <button type="button" class="btn btn-dark" onclick="buscarCliente()" id="btnRead">Buscar</button>
             </div>
-            <!-- email cliente-->
-            <div class="col-12">
-                <label for="inputAddress" class="form-label">E-Mail </label>
-                <input type="email" class="form-control" id="inputAddress" required maxlength="30" spellcheck="false">
+            <hr class="mt-4 border border-primary border-1 opacity-75">
+            <!-- id oculto-->
+            <div class="col-md-6" id="idClient">
+                <input type="text" class="form-control" id="inputId" placeholder="id">                
             </div>
-
-            <!-- botões-->
-            <div class="col-12">
-                <br>
+            <!-- Nome -->
+            <div class="col-md-8">
+                <label for="inputNameClient" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="inputName" required maxlength="50" spellcheck="false">
+            </div>
+            <!-- Telefone -->
+            <div class="col-md-4">
+                <label for="inputPhoneClient" class="form-label">Telefone</label>
+                <input type="tel" class="form-control" id="inputPhone" required maxlength="15">
+            </div>
+            <!-- E-mail -->
+            <div class="col-8">
+                <label for="inputEmailClient" class="form-label">E-mail</label>
+                <input type="email" class="form-control" id="inputAddress" spellcheck="false">
+            </div>
+            <!-- Botões -->
+            <div class="mt-5">
                 <button type="submit" class="btn btn-dark" id="btnCreate">Adicionar</button>
                 <button type="submit" class="btn btn-dark" id="btnUpdate">Editar</button>
-                <button type="submit" class="btn btn-dark" id="btnDelete">Excluir</button>
-                <button type="reset" class="btn" id="btnReset" onclick="resetform()"></button>
+                <button type="button" class="btn btn-dark" id="btnDelete">Excluir</button>
+                <button type="reset" class="btn" id="btnReset" onclick="resetForm()"></button>
             </div>
         </form>
     </div>

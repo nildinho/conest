@@ -264,7 +264,7 @@ ipcMain.on('new-client', async (event, cliente) => {
 
 
 // fornecedor
-ipcMain.on('new-fornecedor', async (event, fornecedor) => {
+ipcMain.on('novo-fornecedor', async (event, fornecedor) => {
     console.log(fornecedor) //Teste do passo 2 - slide
     // passo 3 (slide): cadastrar o cliente no MongoDB
     try {
@@ -297,43 +297,32 @@ ipcMain.on('new-fornecedor', async (event, fornecedor) => {
 
 //CRUD Read >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Aviso (Busca: preenchimento de campo obrigatório)
-ipcMain.on('dialog-infoSearchDialog', (event) => {
-    dialog.showMessageBox({
-        type: 'warning',
-        title: 'Atenção!',
-        message: 'Preencha o nome do cliente',
-        buttons: ['OK']
-    })
-    event.reply('focus-search')
-})
-// Recebimento do  pedido de busca de cliente pelo nome (passo 1)
+// CRud Read >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// Aviso (Busca: Preenchimento de campo obrigatório)
 ipcMain.on('search-client', async (event, nomeCliente) => {
-    console.log(nomeCliente)
-    //passo 2: Busca no banco de dados
+    console.log(nomeCliente) //receber pedido de busca do form
     try {
-        // find() "método de busca" newRegex
-        const dadosCliente = await clienteModel.find({nomeCliente: new RegExp(nomeCliente,'i') })
-        console.log(dadosCliente)//  passo 3 (recebimento dos dados do cliente)
-        // UX (se o cliente não estiver cadastrado, avisa o usuario e habilita cadastro)
+        const dadosCliente = await clienteModel.find({ nomeCliente: new RegExp(nomeCliente, 'i') }) // buscar no banco 
+        console.log(dadosCliente)
+        //UX
         if (dadosCliente.length === 0) {
             dialog.showMessageBox({
                 type: 'warning',
-                title:'Aviso!',
-                message: 'Cliente não cadastrado. \nDeseja cadastrar este Cliente?',
-                buttons: ['Sim','Não'],
-                defaultId: 0
-            }).then((result)=>{
-                if(result.response === 0) {
-                    // setar o nome do cliente no form e habilitar o cadastramento
-                    event.reply('name-client')
+                title: 'Clientes',
+                message: 'Cliente não cadastrado.\nDeseja cadastrar este cliente?',
+                defaultId: 0,
+                buttons: ['Sim', 'Nâo']
+            }).then((result) => {
+                if (result.response === 0) {
+                    event.reply('set-nameClient')
                 } else {
-                    //limpar a caixa de busca
                     event.reply('clear-search')
                 }
             })
         } else {
-
+            event.reply('data-client', JSON.stringify(dadosCliente)) //envio dos dados do cliente ao renderizador (cliente.js)
         }
+
     } catch (error) {
         console.log(error)
     }

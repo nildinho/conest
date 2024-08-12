@@ -6,7 +6,7 @@
 //CRUD Create >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // captura dos  inputs do formulario (passp 1 - slides)
 let formFornecedor = document.getElementById('frmFornecedor')
-let nomeFornecedor = document.getElementById('inputRazao')
+let nomeFornecedor = document.getElementById('inputNomeFornecedor')
 let foneFornecedor = document.getElementById('inputPhoneFornecedor')
 let emailFornecedor = document.getElementById('inputEmailFornecedor')
 let cnpjFornecedor = document.getElementById('inputCnpj')

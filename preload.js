@@ -8,14 +8,14 @@ contextBridge.exposeInMainWorld('api', {
     openreports: ()=> ipcRenderer.send('open-relatorios'),
     dbMessage: (message) => ipcRenderer.on('db-message', message),
     newClient: (cliente) => ipcRenderer.send('new-client', cliente),
-    newFornecedor: (fornecedor) => ipcRenderer.send('new-fornecedor', fornecedor),
-    infoSearchDialog: () => ipcRenderer.send('dialog-infoSearchDialog'),
-    focusSearch: (args) => ipcRenderer.on('focus-search', args),
+    newFornecedor: (fornecedor) => ipcRenderer.send('novo-fornecedor', fornecedor),
+    infoSearchClient: () => ipcRenderer.send('dialog-infoSearchClient'),
+    focusClient: (args) => ipcRenderer.on('focus-searchClient', args),
     searchClient: (nomeCliente) => ipcRenderer.send('search-client', nomeCliente),
-    nameClient: (args) => ipcRenderer.on('name-client', args),
-    clearSearch: (args) => ipcRenderer.on('clear-search', args)
-
-    
+    nameClient: (args) => ipcRenderer.on('set-nameClient', args),
+    clearSearch: (args) => ipcRenderer.on('clear-search', args),
+    dataClient: (dadosCliente) => ipcRenderer.on('data-client', dadosCliente),
+    resetForm: (args) => ipcRenderer.on('reset-form', args)
 })
 
 // status de conexão (verificar se o banco de dados está conectado)
