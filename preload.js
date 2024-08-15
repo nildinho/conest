@@ -1,4 +1,4 @@
-const {contextBridge, ipcRenderer, ipcMain } = require('electron')
+const {contextBridge, ipcRenderer } = require('electron')
 
 contextBridge.exposeInMainWorld('api', {
     hello: () => ipcRenderer.send('send-message', "Oi!"),
@@ -8,14 +8,24 @@ contextBridge.exposeInMainWorld('api', {
     openreports: ()=> ipcRenderer.send('open-relatorios'),
     dbMessage: (message) => ipcRenderer.on('db-message', message),
     newClient: (cliente) => ipcRenderer.send('new-client', cliente),
-    newFornecedor: (fornecedor) => ipcRenderer.send('novo-fornecedor', fornecedor),
+    novoFornecedores: (fornecedor) => ipcRenderer.send('new-fornecedores',fornecedor),
     infoSearchClient: () => ipcRenderer.send('dialog-infoSearchClient'),
     focusClient: (args) => ipcRenderer.on('focus-searchClient', args),
     searchClient: (nomeCliente) => ipcRenderer.send('search-client', nomeCliente),
     nameClient: (args) => ipcRenderer.on('set-nameClient', args),
     clearSearch: (args) => ipcRenderer.on('clear-search', args),
     dataClient: (dadosCliente) => ipcRenderer.on('data-client', dadosCliente),
-    resetForm: (args) => ipcRenderer.on('reset-form', args)
+    resetForm: (args) => ipcRenderer.on('reset-form', args),
+    updateClient: (cliente) => ipcRenderer.send('update-client', cliente),
+    deleteClient: (idCli) => ipcRenderer.send('delete-client', idCli),
+    infoSearchFornecedor: () => ipcRenderer.send('dialog-infoSearchFornecedor'),
+    focusFornecedor: (args) => ipcRenderer.on('focus-searchFornecedor', args),
+    searchFornecedor: (nomeFornecedor) => ipcRenderer.send('search-fornecedor', nomeFornecedor),
+    nameFornecedor: (args) => ipcRenderer.on('set-nameFornecedor', args),
+    dataFornecedor: (dadosFornecedor) => ipcRenderer.on('data-fornecedor', dadosFornecedor),
+    updateFornecedor: (fornecedor) => ipcRenderer.send('update-fornecedor', fornecedor),
+    deleteFornecedor: (idFor) => ipcRenderer.send('delete-fornecedor', idFor)
+    
 })
 
 // status de conexão (verificar se o banco de dados está conectado)

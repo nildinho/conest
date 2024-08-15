@@ -25,19 +25,19 @@
         </div>
  
         <div class="col-6">
-            <button type="button" class="btn btn-dark">Buscar</button>
+            <button type="button" class="btn btn-dark" onclick="buscarFornecedor()" id="btnRead">Buscar</button>
         </div>
  
         <hr class="border border-dark border-1 opacity-75">
  
-        <div class="col-6">
-            <input type="text" class="form-control" id="inputId" placeholder="ID">
+        <div class="col-md-6" id="idFornecedor">
+            <input type="text" class="form-control" id="inputIdFornecedor" placeholder="id">                
         </div>
  
  
         <div class="col-md-6">
             <label for="inputName" class="form-label">Razão Social</label>
-            <input type="text" class="form-control" id="inputNomeFornecedor" required maxlength="30" spellcheck="false">
+            <input type="text" class="form-control" id="inputNameFornecedor" required maxlength="30" spellcheck="false">
         </div>
  
  
@@ -99,9 +99,9 @@
         <div class="container col-12">
             <br>
             <button type="submit" class="btn btn-dark" id="btnCreate">Adicionar</button>
-            <button type="submit" class="btn btn-dark" id="btnUpdate">Editar</button>
-            <button type="submit" class="btn btn-dark" id="btnDelete">Excluir</button>
-            <button type="reset" class="btn" id="btnReset"></button>
+            <button type="button" class="btn btn-dark" id="btnUpdate" onclick="editarFornecedor()">Editar</button>
+            <button type="button" class="btn btn-dark" id="btnDelete" onclick="excluirFornecedor()">Excluir</button>
+            <button type="reset" class="btn" id="btnReset" onclick="resetForm()"></button>
         </div>
     </form>
 </div>

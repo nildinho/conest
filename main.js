@@ -89,7 +89,10 @@ const suppWindow = () => {
             autoHideMenuBar: true,
             modal: true,
             parent: father,
-            resizable: false
+            resizable: false,
+            webPreferences: {
+                preload: path.join(__dirname, 'preload.js'),
+            }
         })
     }
     supp.loadFile('./src/views/fornecedores.html')
@@ -110,7 +113,8 @@ const produtWindow = () => {
             autoHideMenuBar: true,
             modal: true,
             parent: father,
-            resizable: false
+            resizable: false,
+            
         })
     }
     produt.loadFile('./src/views/produtos.html')
@@ -260,13 +264,14 @@ ipcMain.on('new-client', async (event, cliente) => {
         } catch (error) {
         console.log(error)
     }
-}),
+})
 
 
 // fornecedor
-ipcMain.on('novo-fornecedor', async (event, fornecedor) => {
+ipcMain.on('new-fornecedores', async (event, fornecedor) => {
     console.log(fornecedor) //Teste do passo 2 - slide
     // passo 3 (slide): cadastrar o cliente no MongoDB
+    
     try {
         const novoFornecedor = new fornecedorModel({
             nomeFornecedor: fornecedor.nomeFor,
@@ -291,8 +296,8 @@ ipcMain.on('novo-fornecedor', async (event, fornecedor) => {
         } catch (error) {
         console.log(error)
     }
+    
 })
-
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 //CRUD Read >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -327,12 +332,149 @@ ipcMain.on('search-client', async (event, nomeCliente) => {
         console.log(error)
     }
 })
+
+// fornecedor
+ipcMain.on('search-fornecedor', async (event, nomeFornecedor) => {
+    console.log(nomeFornecedor) //receber pedido de busca do form
+    try {
+        const dadosFornecedor = await fornecedorModel.find({ nomeFornecedor: new RegExp(nomeFornecedor, 'i') }) // buscar no banco 
+        console.log(dadosFornecedor)
+        //UX
+        if (dadosFornecedor.length === 0) {
+            dialog.showMessageBox({
+                type: 'warning',
+                title: 'Fornecedores',
+                message: 'Fornecedor não cadastrado.\nDeseja cadastrar este Fornecedor?',
+                defaultId: 0,
+                buttons: ['Sim', 'Nâo']
+            }).then((result) => {
+                if (result.response === 0) {
+                    event.reply('set-nameFornecedor')
+                } else {
+                    event.reply('clear-search')
+                }
+            })
+        } else {
+            event.reply('data-fornecedor', JSON.stringify(dadosFornecedor)) //envio dos dados do cliente ao renderizador (cliente.js)
+        }
+
+    } catch (error) {
+        console.log(error)
+    }
+})
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 //CRUD Update >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// CRUD Update >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ipcMain.on('update-client', async (event, cliente) => {
+    console.log(cliente) // teste do passo 2
+
+    try {
+        const clienteEditado = await clienteModel.findByIdAndUpdate(
+            cliente.idCli, {
+            nomeCliente: cliente.nomeCli,
+            foneCliente: cliente.foneCli,
+            emailCliente: cliente.emailCli
+        },
+            {
+                new: true
+            }
+        )
+        dialog.showMessageBox({
+            type: 'info',
+            title: "Aviso",
+            message: "Dados do cliente alterados com sucesso",
+            buttons: ['OK']
+        })
+        event.reply('reset-form')
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+// fornecedor
+ipcMain.on('update-fornecedor', async (event, fornecedor) => {
+    console.log(fornecedor) // teste do passo 2
+
+    try {
+        const fornecedorEditado = await fornecedorModel.findByIdAndUpdate(
+            fornecedor.idFor, {
+            nomeFornecedor: fornecedor.nomeFor,
+            foneFornecedor: fornecedor.foneFOr,
+            emailFornecedor: fornecedor.emailFor,
+            cnpjFornecedor: fornecedor.cnpjFor,
+            cepFornecedor: fornecedor.cepFor,
+            ruaFornecedor: fornecedor.ruaFor,
+            numeroFornecedor: fornecedor.numeroFor,
+            complementoFornecedor: fornecedor.complementoFor,
+            bairroFornecedor: fornecedor.bairroFor,
+            cidadeFornecedor: fornecedor.cidadeFor,
+            ufFornecedor: fornecedor.ufFor
+        },
+            {
+                new: true
+            }
+        )
+        dialog.showMessageBox({
+            type: 'info',
+            title: "Aviso",
+            message: "Dados do fornecedor alterados com sucesso",
+            buttons: ['OK']
+        })
+        event.reply('reset-form')
+    } catch (error) {
+        console.log(error)
+    }
+})
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 //CRUD Delete >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ipcMain.on('delete-client', (event, idCli) => {
+    console.log(idCli) // teste do passo 2
+    //Importante! Confirmar a ação antes de excluir do banco
+    dialog.showMessageBox({
+        type: 'error',
+        title: 'ATENÇÃO!',
+        message: 'Tem certeza que deseja excluir este cliente?',
+        defaultId: 0,
+        buttons: ['Sim', 'Não']
+    }).then (async(result) => {
+        if (result.response === 0) {
+            // Passo 3 (excluir o cliente do banco)
+            try {                
+                await clienteModel.findByIdAndDelete(idCli) 
+                event.reply('reset-form')               
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    })
+})
+
+// fornecedor
+ipcMain.on('delete-fornecedor', (event, idFor) => {
+    console.log(idFor) // teste do passo 2
+    //Importante! Confirmar a ação antes de excluir do banco
+    dialog.showMessageBox({
+        type: 'error',
+        title: 'ATENÇÃO!',
+        message: 'Tem certeza que deseja excluir este Fornecedor?',
+        defaultId: 0,
+        buttons: ['Sim', 'Não']
+    }).then (async(result) => {
+        if (result.response === 0) {
+            // Passo 3 (excluir o cliente do banco)
+            try {                
+                await fornecedorModel.findByIdAndDelete(idFor) 
+                event.reply('reset-form')               
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    })
+})
+
+
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 

@@ -29,28 +29,28 @@
             <hr class="mt-4 border border-primary border-1 opacity-75">
             <!-- id oculto-->
             <div class="col-md-6" id="idClient">
-                <input type="text" class="form-control" id="inputId" placeholder="id">                
+                <input type="text" class="form-control" id="inputClientId" placeholder="id">                
             </div>
             <!-- Nome -->
             <div class="col-md-8">
                 <label for="inputNameClient" class="form-label">Nome</label>
-                <input type="text" class="form-control" id="inputName" required maxlength="50" spellcheck="false">
+                <input type="text" class="form-control" id="inputNameClient" required maxlength="50" spellcheck="false">
             </div>
             <!-- Telefone -->
             <div class="col-md-4">
                 <label for="inputPhoneClient" class="form-label">Telefone</label>
-                <input type="tel" class="form-control" id="inputPhone" required maxlength="15">
+                <input type="tel" class="form-control" id="inputPhoneClient" required maxlength="15">
             </div>
             <!-- E-mail -->
             <div class="col-8">
                 <label for="inputEmailClient" class="form-label">E-mail</label>
-                <input type="email" class="form-control" id="inputAddress" spellcheck="false">
+                <input type="email" class="form-control" id="inputEmailClient" spellcheck="false">
             </div>
             <!-- Botões -->
             <div class="mt-5">
                 <button type="submit" class="btn btn-dark" id="btnCreate">Adicionar</button>
-                <button type="submit" class="btn btn-dark" id="btnUpdate">Editar</button>
-                <button type="button" class="btn btn-dark" id="btnDelete">Excluir</button>
+                <button type="button" class="btn btn-dark" id="btnUpdate" onclick="editarCliente()">Editar</button>
+                <button type="button" class="btn btn-dark" id="btnDelete" onclick="excluirCliente()">Excluir</button>
                 <button type="reset" class="btn" id="btnReset" onclick="resetForm()"></button>
             </div>
         </form>
