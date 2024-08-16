@@ -25,7 +25,6 @@ contextBridge.exposeInMainWorld('api', {
     dataFornecedor: (dadosFornecedor) => ipcRenderer.on('data-fornecedor', dadosFornecedor),
     updateFornecedor: (fornecedor) => ipcRenderer.send('update-fornecedor', fornecedor),
     deleteFornecedor: (idFor) => ipcRenderer.send('delete-fornecedor', idFor)
-    
 })
 
 // status de conexão (verificar se o banco de dados está conectado)

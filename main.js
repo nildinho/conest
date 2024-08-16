@@ -114,7 +114,9 @@ const produtWindow = () => {
             modal: true,
             parent: father,
             resizable: false,
-            
+            webPreferences: {
+                preload: path.join(__dirname, 'preload.js'),
+            }
         })
     }
     produt.loadFile('./src/views/produtos.html')
