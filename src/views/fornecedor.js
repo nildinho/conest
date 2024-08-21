@@ -2,7 +2,7 @@
  * Processo de renderização
  * clientes
  */
- 
+
 // mudar propriedades do documento ao iniciar
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("inputSearch").focus() //foco ao iniciar
@@ -28,7 +28,7 @@ function restaurarTeclaEnter() {
     document.getElementById("frmFornecedor").removeEventListener("keydown", teclaEnter);
 }
 
- 
+
 //CRUD Create >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // captura dos  inputs do formulario (passp 1 - slides)
 let idFornecedor = document.getElementById('inputIdFornecedor')
@@ -67,10 +67,10 @@ formFornecedor.addEventListener('submit', async (event) => {
     }
     api.novoFornecedores(fornecedor)
     // limpar os dados from após envio
-formFornecedor.reset()
+    formFornecedor.reset()
 })
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
- 
+
 // CRud Read >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // vetor usado na renderização dos dados
 let arrayFornecedor = []
@@ -122,6 +122,7 @@ api.dataFornecedor((event, dadosFornecedor) => {
         document.getElementById('inputBairro').value = c.bairroFornecedor
         document.getElementById('inputCidade').value = c.cidadeFornecedor
         document.getElementById('inputUf').value = c.ufFornecedor
+        document.getElementById('inputCep').value = c.cepFornecedor
         //limpar caixa de busca
         document.getElementById("inputSearch").value = ""
         //remover o foco e desativar a caixa de busca
@@ -138,7 +139,7 @@ api.dataFornecedor((event, dadosFornecedor) => {
 
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
- 
+
 //CRUD Update >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function editarFornecedor() {
     //Passo 1 do slide
@@ -165,15 +166,17 @@ function excluirFornecedor() {
     let idFor = idFornecedor.value // Passo 1 (obter o id do cliente)
     console.log(idFor) // teste do passo 1
     api.deleteFornecedor(idFor) // Passo 2 - enviar o id do cliente ao main
+
 }
 
 api.resetForm((args) => {
-    resetForm()   
+    resetForm()
+    formFornecedor.reset()
 })
 
 function resetForm() {
-    document.getElementById('inputSearch').disabled = false    
-    document.getElementById('inputSearch').focus()    
+    document.getElementById('inputSearch').disabled = false
+    document.getElementById('inputSearch').focus()
     btnCreate.disabled = true
     btnRead.disabled = false
     btnUpdate.disabled = true
@@ -181,4 +184,4 @@ function resetForm() {
     //document.getElementById("frmClient").addEventListener("keydown", teclaEnter)  
 }
 
- 
+
